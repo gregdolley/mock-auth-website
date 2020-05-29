@@ -16,7 +16,7 @@ const Login = () => {
   const destinationIsValid = (destination:string) => {
     try {
       const url = new URL(destination);
-      const regex = /^((([a-z0-9\-_]+\.)+orglabsolutions\.com)|localhost)$/i;
+      const regex = /^((([a-z0-9\-_]+\.)+my_test\.com)|localhost)$/i;
       return regex.test(url.hostname);
     } catch (error) {
       console.error(error);
@@ -38,7 +38,7 @@ const Login = () => {
       redirectMessage += urlObject.toString().replace(jwt, "<jwt snipped...>");
 
       console.log(redirectMessage);
-      
+
       window.location.assign(urlObject.toString());
     }
   }
