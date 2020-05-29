@@ -8,7 +8,7 @@ const App = () => {
     <div>
       <Suspense fallback={<div>loading...</div>}>
         <Switch>
-          <Route exact path='/home' component={Home} />
+        <Route exact path='/home' component={Home} />
         </Switch>
       </Suspense>
     </div>
