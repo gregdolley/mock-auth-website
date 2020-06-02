@@ -23,7 +23,7 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
 const Routes = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<div>loading site (Routes)...</div>}>
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Login} />

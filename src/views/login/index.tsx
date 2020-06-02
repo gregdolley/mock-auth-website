@@ -1,19 +1,30 @@
 import React, { useState, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 
+const defaultJwt = "<REMOVED FOR GITHUB> Put Jwt back here before running.";
+
 const Login = () => {
   const history = useHistory();
   const [values, setValues] = useState({
-    email: "",
+    email: localStorage.getItem("email") || "",
     password: "",
+    jwt: localStorage.getItem("jwt") || defaultJwt,
   });
 
   function handleChangeValue(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.currentTarget;
     setValues({ ...values, [name]: value });
+
+    if (typeof value === "string" && value.length > 0) {
+      console.log("Saving to local storage...");
+      console.log("Key = ", name);
+      console.log("Value = ", value);
+
+      localStorage.setItem(name, value);
+    }
   }
 
-  const destinationIsValid = (destination:string) => {
+  const destinationIsValid = (destination: string) => {
     try {
       const url = new URL(destination);
       const regex = /^((([a-z0-9\-_]+\.)+my_test\.com)|localhost)$/i;
@@ -26,8 +37,7 @@ const Login = () => {
   function handleLogin(event: FormEvent) {
     event.preventDefault();
 
-    let jwt =
-      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjo5NzY4LCJuYW1lIjoiT3JnTGFiIEFkbWluMyJ9LCJleHAiOjE2MjE0MDU1MzQsIm5iZiI6MTU4OTg2OTUzMywiY2xpZW50Ijp7ImlkIjoxNDIsImxvZ2luIjoiYWRtaW4iLCJhZG1pbiI6dHJ1ZX0sImJvb2ttYXJrIjoibmVvNGo6Ym9va21hcms6djE6dHgxMTcyIn0.bzRED7vzSr_Ts_DULZs5uYEsExqAtkDTRkfulP5TyME";
+    let jwt = values.jwt;
     let url = new URLSearchParams(window.location.search).get("destination");
 
     if (url && destinationIsValid(url)) {
@@ -49,6 +59,13 @@ const Login = () => {
       <form className="login-form" onSubmit={handleLogin}>
         <input
           className="input"
+          placeholder="JWT"
+          name="jwt"
+          onChange={handleChangeValue}
+          value={values.jwt}
+        />
+        <input
+          className="input"
           placeholder="Email"
           name="email"
           onChange={handleChangeValue}
@@ -59,6 +76,7 @@ const Login = () => {
           placeholder="Password"
           type="password"
           name="password"
+          autoComplete="current-password"
           onChange={handleChangeValue}
           value={values.password}
         />

@@ -6,7 +6,7 @@ const Home = lazy(() => import('./views/home'))
 const App = () => {
   return (
     <div>
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<div>loading site (App)...</div>}>
         <Switch>
         <Route exact path='/home' component={Home} />
         </Switch>
